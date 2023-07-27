@@ -1,23 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-
 import { wpquery } from "../graphql/wordpressQuery";
-import type { Post } from "../graphql/schemaTypes";
 
-const data = await wpquery({
-  query: `
-  {
-  posts {
-    nodes {
-      title
-      slug
-	  excerpt
-    }
-  }
+export async function getStaticPaths() {
+  const data = await wpquery({
+    query: `
+      query LoadAllPosts {
+        posts {
+          nodes {
+            title
+            slug
+            content(format: RENDERED)
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  return data.posts.nodes.map((post: any) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
 }
-  `,
-});
+
+const { post } = Astro.props;
 ---
 
 <Layout title="Welcome to Astro.">
@@ -52,23 +61,12 @@ const data = await wpquery({
       </defs>
     </svg>
     <h1>
-      Welcome to <span class="text-gradient"
-        >Astro</span
-      >
+      <span class="text-gradient"
+        >{post.title}</span>
     </h1>
-    <ul role="list" class="link-card-grid">
-      {
-        data.posts.nodes.map((post: Post) => {
-          return (
-            <Card
-              href={post.slug}
-              title={post.title}
-              body={post.excerpt}
-            />
-          );
-        })
-      }
-    </ul>
+
+    <Fragment set:html={post.content} />
+
   </main>
 </Layout>
 

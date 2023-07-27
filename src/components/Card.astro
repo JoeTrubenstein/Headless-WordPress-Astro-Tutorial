@@ -1,8 +1,10 @@
 ---
+import type { Post } from "../graphql/schemaTypes";
+
 interface Props {
-	title: string;
-	body: string;
-	href: string;
+	title: Post["title"];
+	body: Post["excerpt"];
+	href: Post["slug"];
 }
 
 const { href, title, body } = Astro.props;
@@ -14,9 +16,7 @@ const { href, title, body } = Astro.props;
 			{title}
 			<span>&rarr;</span>
 		</h2>
-		<p>
-			{body}
-		</p>
+		<p set:html={body}></p>
 	</a>
 </li>
 <style>
