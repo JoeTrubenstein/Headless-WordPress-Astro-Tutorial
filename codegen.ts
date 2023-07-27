@@ -6,6 +6,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema: [
     {
+      // replace with your own WordpPress GraphQL endpoint
       'https://commandline.cafe/graphql': {
         headers: {
           Authorization: import.meta.env.GRAPHQL_PASSWORD
