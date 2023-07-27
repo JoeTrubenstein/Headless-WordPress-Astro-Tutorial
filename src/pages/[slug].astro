@@ -5,16 +5,16 @@ import { wpquery } from "../graphql/wordpressQuery";
 export async function getStaticPaths() {
   const data = await wpquery({
     query: `
-      query LoadAllPosts {
-        posts {
-          nodes {
-            title
-            slug
-            content(format: RENDERED)
-            }
-          }
-        }
-      }
+{
+  posts {
+    nodes {
+      title
+      slug
+	  excerpt
+      content(format: RENDERED)
+    }
+  }
+}
     `,
   });
 
@@ -62,11 +62,11 @@ const { post } = Astro.props;
     </svg>
     <h1>
       <span class="text-gradient"
-        >{post.title}</span>
+        >{post.title}</span
+      >
     </h1>
 
     <Fragment set:html={post.content} />
-
   </main>
 </Layout>
 

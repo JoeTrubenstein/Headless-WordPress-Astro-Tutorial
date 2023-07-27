@@ -15,10 +15,12 @@ interface WPGraphQLParams {
         variables,
       }),
     });
+
     if (!res.ok) {
       console.error(res);
       return {};
     }
+    
     const { data } = await res.json();
     return data;
   }
