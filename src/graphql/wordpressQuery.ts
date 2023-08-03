@@ -8,8 +8,11 @@ interface WPGraphQLParams {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+
+        // optional authorization headers
         "Authorization" : import.meta.env.GRAPHQL_PASSWORD
       },
+      
       body: JSON.stringify({
         query,
         variables,
@@ -20,7 +23,7 @@ interface WPGraphQLParams {
       console.error(res);
       return {};
     }
-    
+
     const { data } = await res.json();
     return data;
   }

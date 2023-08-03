@@ -1,4 +1,5 @@
 ---
+// src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 
@@ -56,19 +57,17 @@ const data = await wpquery({
         >Astro</span
       >
     </h1>
-    <ul role="list" class="link-card-grid">
-      {
-        data.posts.nodes.map((post: Post) => {
-          return (
-            <Card
-              href={post.slug}
-              title={post.title}
-              body={post.excerpt}
-            />
-          );
-        })
-      }
-    </ul>
+	<ul role="list" class="link-card-grid">
+		{ data.posts.nodes.map((post: Post) => {
+		  return (
+			<Card
+			  href={post.slug}
+			  title={post.title}
+			  body={post.excerpt}
+			/>
+		  );
+		})}
+	  </ul>
   </main>
 </Layout>
 
